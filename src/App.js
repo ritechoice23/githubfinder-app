@@ -23,10 +23,10 @@ function App() {
     <div className="m-5">
       {count}
       <div>
-        <button onClick={() => countDispatch({ type: 'increment', payload: { count: 50 } })} className="btn">+</button>
-        <button onClick={() => countDispatch({ type: 'decrement', payload: { count: 50 } })} className="btn">-</button>
+        <button onClick={() => countDispatch({ type: 'increment', payload: { count: 50 } })} className="btn btn-primary">+</button>
+        <button onClick={() => countDispatch({ type: 'decrement', payload: { count: 50 } })} className="btn btn-error">-</button>
 
-        <button onClick={() => countDispatch({ type: 'reset', payload: { count: 0 } })} className="btn">reset</button>
+        <button onClick={() => countDispatch({ type: 'reset', payload: { count: 0 } })} className="btn btn-info">reset</button>
       </div>
     </div>
   );
