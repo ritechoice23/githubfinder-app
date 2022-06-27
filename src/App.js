@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useReducer } from "react";
+
+const initialState = 0;
+function countReducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return action.payload.count ? state + action.payload.count : state + 1;
+    case 'decrement':
+      if (state > 0) {
+        return action.payload.count ? state - action.payload.count : state - 1
+      } else { return state = 0 }
+
+    case 'reset':
+      return state = 0;
+    default:
+      return state;
+  }
+}
 
 function App() {
+  const [count, countDispatch] = useReducer(countReducer, initialState)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="m-5">
+      {count}
+      <div>
+        <button onClick={() => countDispatch({ type: 'increment', payload: { count: 50 } })} className="btn">+</button>
+        <button onClick={() => countDispatch({ type: 'decrement', payload: { count: 50 } })} className="btn">-</button>
+
+        <button onClick={() => countDispatch({ type: 'reset', payload: { count: 0 } })} className="btn">reset</button>
+      </div>
     </div>
   );
 }
