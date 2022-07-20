@@ -1,34 +1,35 @@
-import { useReducer } from "react";
-
-const initialState = 0;
-function countReducer(state, action) {
-  switch (action.type) {
-    case 'increment':
-      return action.payload.count ? state + action.payload.count : state + 1;
-    case 'decrement':
-      if (state > 0) {
-        return action.payload.count ? state - action.payload.count : state - 1
-      } else { return state = 0 }
-
-    case 'reset':
-      return state = 0;
-    default:
-      return state;
-  }
-}
-
+import React from "react";
+import Navbar from "./components/layouts/Navbar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Footer from "./components/layouts/Footer";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import NotFound from "./pages/NotFound";
+import { GitHubProvider } from "./contex/github/GithubContext";
+import { AlertProvider } from "./contex/alert/AlertContext"
+import User from "./pages/User";
 function App() {
-  const [count, countDispatch] = useReducer(countReducer, initialState)
-  return (
-    <div className="m-5">
-      {count}
-      <div>
-        <button onClick={() => countDispatch({ type: 'increment', payload: { count: 50 } })} className="btn btn-primary">+</button>
-        <button onClick={() => countDispatch({ type: 'decrement', payload: { count: 50 } })} className="btn btn-error">-</button>
 
-        <button onClick={() => countDispatch({ type: 'reset', payload: { count: 0 } })} className="btn btn-info">reset</button>
-      </div>
-    </div>
+  return (
+    <GitHubProvider>
+      <AlertProvider>
+        <BrowserRouter>
+          <div className="flex flex-col justify-between h-screen">
+            <Navbar />
+            <main className="container px-3 mx-auto">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/user/:login" element={<User />} />
+                <Route path="/notfound" element={<NotFound />} />
+                <Route path="/*" element={<NotFound />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </AlertProvider>
+    </GitHubProvider>
   );
 }
 
